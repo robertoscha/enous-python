@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from streamlit_searchbox import st_searchbox
-
+from data_loader import cargar_datos
 
 
 def search_clientes(query):
-    return [c for c in clientes if query.lower() in c.lower()]
+    resultados = clientes[clientes['nombre_cliente'].str.lower().str.contains(query.lower())]
+    return resultados['nombre_cliente'].tolist()
 
-clientes = ["Cliente A", "Cliente B", "Cliente C"]
+clientes = cargar_datos()
 vendedores = ["Vendedor X", "Vendedor Y", "Vendedor Z"]
 
 st.title("Registro de contactos")
